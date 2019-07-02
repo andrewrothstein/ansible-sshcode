@@ -1,0 +1,55 @@
+---
+- name: resolve platform specific vars
+  include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml'
+        - '{{ ansible_distribution }}.yml'
+        - '{{ ansible_os_family }}.yml'
+      skip: true
+      paths:
+        - '{{ role_path }}/vars'
+- name: check for install
+  become: yes
+  stat:
+    path: '{{ sshcode_install_ver_dir }}'
+  changed_when: False
+  register: sshcode_binary
+- when: not sshcode_binary.stat.exists
+  block:
+    - name: download
+      become: yes
+      become_user: root
+      get_url:
+        url: '{{ sshcode_url }}'
+        dest: /tmp/{{ sshcode_local_tar }}
+        checksum: '{{ sshcode_checksum }}'
+    - name: mkdir
+      become: yes
+      become_user: root
+      file:
+        path: '{{ sshcode_install_ver_dir }}'
+        state: directory
+        mode: 0755
+    - name: unarchive
+      become: yes
+      become_user: root
+      unarchive:
+        remote_src: yes
+        src: /tmp/{{ sshcode_local_tar }}
+        dest: '{{ sshcode_install_ver_dir }}'
+        creates: '{{ sshcode_install_ver_dir }}/sshcode'
+  always:
+    - name: cleanup
+      become: yes
+      become_user: root
+      file:
+        path: /tmp/{{ sshcode_local_tar }}
+        state: absent
+- name: link
+  become: yes
+  become_user: root
+  file:
+    src: '{{ sshcode_install_ver_dir }}/sshcode'
+    dest: '{{ sshcode_install_dir }}/sshcode'
+    state: link

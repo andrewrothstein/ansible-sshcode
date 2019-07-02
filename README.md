@@ -1,0 +1,39 @@
+andrewrothstein.sshcode
+=========
+[![Build Status](https://travis-ci.org/andrewrothstein/ansible-sshcode.svg?branch=master)](https://travis-ci.org/andrewrothstein/ansible-sshcode)
+
+[Run VS Code on any server over SSH.](https://github.com/cdr/sshcode)
+
+Requirements
+------------
+
+See [meta/main.yml](meta/main.yml)
+
+Role Variables
+--------------
+
+See [defaults/main.yml](defaults/main.yml)
+
+Dependencies
+------------
+
+See [meta/main.yml](meta/main.yml)
+
+Example Playbook
+----------------
+
+```yml
+- hosts: servers
+  roles:
+    - andrewrothstein.sshcode
+```
+
+License
+-------
+
+MIT
+
+Author Information
+------------------
+
+Andrew Rothstein <andrew.rothstein@gmail.com>

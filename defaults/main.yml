@@ -1,0 +1,12 @@
+---
+# defaults file for sshcode
+sshcode_mirror: https://github.com/cdr/sshcode/releases/download
+sshcode_ver: v0.8.0
+sshcode_platform: linux-amd64
+sshcode_checksums:
+  v0.8.0:
+    # https://github.com/cdr/sshcode/releases/download/v0.8.0/sshcode-linux-amd64.tar
+    linux-amd64: sha256:37f2c6abe6b8cc6467ae63954e46cc9a2b930074b02c0400d38075f4a757a61c
+    # https://github.com/cdr/sshcode/releases/download/v0.8.0/sshcode-darwin-amd64.tar
+    darwin-amd64: sha256:023d47106bc11d1c35a868b4590c71975745b8f6c4a4b32d556095eaa2ef5f35
+sshcode_install_dir: /usr/local/bin
