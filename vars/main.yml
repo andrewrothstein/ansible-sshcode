@@ -1,5 +1,6 @@
 ---
 # vars file for sshcode
+sshcode_platform: '{{ sshcode_os }}-{{ sshcode_arch }}'
 sshcode_remote_tar: sshcode-{{ sshcode_platform }}.tar
 sshcode_url: '{{ sshcode_mirror }}/{{ sshcode_ver }}/{{ sshcode_remote_tar }}'
 
