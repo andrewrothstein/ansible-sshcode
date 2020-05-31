@@ -8,7 +8,7 @@ dl()
     local ver=$1
     local os=$2
     local arch=$3
-    local suffix=${4:-tar}
+    local suffix=${4:-tar.gz}
     local platform="${os}-${arch}"
     local url=$MIRROR/$ver/${APPNAME}-$platform.$suffix
     local lfile=$DIR/${APPNAME}-$platform-$ver.$suffix
@@ -29,4 +29,4 @@ dl_ver() {
     dl $ver darwin amd64
 }
 
-dl_ver ${1:-v0.9.0}
+dl_ver ${1:-v0.10.0}

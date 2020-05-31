@@ -12,7 +12,7 @@
 - name: check for install
   become: yes
   stat:
-    path: '{{ sshcode_install_ver_dir }}'
+    path: '{{ sshcode_install_dir }}'
   changed_when: False
   register: sshcode_binary
 - when: not sshcode_binary.stat.exists
@@ -22,13 +22,13 @@
       become_user: root
       get_url:
         url: '{{ sshcode_url }}'
-        dest: /tmp/{{ sshcode_local_tar }}
+        dest: /tmp/{{ sshcode_tgz }}
         checksum: '{{ sshcode_checksum }}'
     - name: mkdir
       become: yes
       become_user: root
       file:
-        path: '{{ sshcode_install_ver_dir }}'
+        path: '{{ sshcode_install_dir }}'
         state: directory
         mode: 0755
     - name: unarchive
@@ -36,20 +36,29 @@
       become_user: root
       unarchive:
         remote_src: yes
-        src: /tmp/{{ sshcode_local_tar }}
-        dest: '{{ sshcode_install_ver_dir }}'
-        creates: '{{ sshcode_install_ver_dir }}/sshcode'
+        src: /tmp/{{ sshcode_tgz }}
+        dest: '{{ sshcode_install_dir }}'
+        creates: '{{ sshcode_install_exe }}'
   always:
     - name: cleanup
       become: yes
       become_user: root
       file:
-        path: /tmp/{{ sshcode_local_tar }}
+        path: /tmp/{{ sshcode_tgz }}
         state: absent
-- name: link
+- name: link dir
   become: yes
   become_user: root
   file:
-    src: '{{ sshcode_install_ver_dir }}/sshcode'
-    dest: '{{ sshcode_install_dir }}/sshcode'
+    src: '{{ sshcode_install_dir }}'
+    dest: '{{ sshcode_link_dir }}'
+    state: link
+- name: link exe
+  become: yes
+  become_user: root
+  with_items:
+    - sshcode
+  file:
+    src: '{{ sshcode_link_dir }}/{{ item }}'
+    dest: '{{ sshcode_parent_install_dir }}/bin/{{ item }}'
     state: link

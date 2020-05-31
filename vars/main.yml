@@ -1,11 +1,10 @@
 ---
 # vars file for sshcode
 sshcode_platform: '{{ sshcode_os }}-{{ sshcode_arch }}'
-sshcode_remote_tar: sshcode-{{ sshcode_platform }}.tar
-sshcode_url: '{{ sshcode_mirror }}/{{ sshcode_ver }}/{{ sshcode_remote_tar }}'
+sshcode_tgz: sshcode-{{ sshcode_platform }}-{{ sshcode_ver }}.tar.gz
+sshcode_url: '{{ sshcode_mirror }}/{{ sshcode_ver }}/sshcode-{{ sshcode_platform }}.tar.gz'
 
 sshcode_checksum: '{{ sshcode_checksums[sshcode_ver][sshcode_platform] }}'
-
-sshcode_local_tar: sshcode-{{ sshcode_ver }}.tar
-
-sshcode_install_ver_dir: '{{ sshcode_install_dir }}/sshcode-{{ sshcode_ver }}'
+sshcode_install_dir: '{{ sshcode_parent_install_dir }}/sshcode-{{ sshcode_ver }}'
+sshcode_link_dir: '{{ sshcode_parent_install_dir }}/sshcode'
+sshcode_install_exe: '{{ sshcode_install_dir }}/sshcode'
